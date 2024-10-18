@@ -3,7 +3,7 @@ Oat compiler project (LLVM)
 
 
 # Part 1 Micro Language Compiler
-More detailed verstion see [instruction](/Compiler/Part%201-instruction.pdf) and [report](Part1/src/report.md)
+More detailed verstion see [instruction](Part%201-instruction.pdf) and [report](Part1/src/report.md)
 
 #### 1. Background Information:
 This project focuses on designing and implementing a **compiler frontend** for a simplified **Micro Language**. The goal is to transform Micro Language code into **LLVM Intermediate Representation (IR)** and then compile it into **RISC-V assembly**. The compiled code is executed on a RISC-V emulator to validate the correctness.
@@ -71,7 +71,7 @@ This implementation ensures the correctness of the compiler frontend and generat
 
 
 ## Part 2 Oat v.1 Language Scanner (continue to Part 4)
-More detailed verstion see [instruction](/Compiler/Part%202-instruction.pdf) and [report](/Compiler/Part2/src/report.md)
+More detailed verstion see [instruction](Part%202-instruction.pdf) and [report](Part2/src/report.md)
 
 #### 1. Background Information:
 This project involves designing and implementing two scanners (lexical analyzers) for **Oat v.1 Language**:
@@ -138,7 +138,7 @@ The goal is to break the Oat program into **tokens** and identify **lexemes** fo
    ```
 
 ## Part 3 Parsing Techniques
-More detailed verstion see [instruction](/Compiler/Part%203-instruction.pdf) and [report](/Compiler/Part3/src/report.md)
+More detailed verstion see [instruction](Part%203-instruction.pdf) and [report](Part3/src/report.md)
 
 #### 1. Background Information:
 This project focuses on implementing and understanding **parsing techniques** for the **Micro Language** and **Oat v.1 Language**. The tasks include:
@@ -199,7 +199,7 @@ This project focuses on implementing and understanding **parsing techniques** fo
 3. The program will print the parsing steps as it processes the input, similar to the behavior of an LL(1) web demo.
 
 ## Part 4 Compiler Frontend for Oat v.1 
-More detailed verstion see [instruction](/Compiler/Part%204-instruction.pdf) and [report](/Compiler/Part4/report.md)
+More detailed verstion see [instruction](Part%204-instruction.pdf) and [report](Part4/report.md)
 #### 1. Background Information:
 This project implements the remaining stages of the **compiler frontend** for Oat v.1 Language, focusing on **semantic analysis** and **LLVM IR generation**. It builds on previous work involving scanning, parsing, and AST generation. The project involves two key parts:
 - **Semantic Analysis**: Assigns data types and resolves variable scopes.
