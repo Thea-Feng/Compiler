@@ -1,0 +1,8 @@
+### Name: Yutong Feng
+### ID: 120090266
+Semantic analysis part is relatively easy. I just need to come up with which types of code need `datatype` and finish the error handling (*bonus*), such as undeclared variables or functions or int type add string type. I think the `unique_name` using scope stack is quite smart. If I'm doing this, I may not think up such a way to deal with global and local variable.
+
+Chanlleges lies in code generation part. Since I just print llvm IR code in assignment 1, I need to learn how to use llvm API to generate llvm IR code this time. Things like building loop or if block are easy since I can refer to examples. Dealing variables are hard, such as how to declare gloabl and local variables and how to give them names. I modify the scopes where I record each nodes' scope id when doing semantic analysis. Thus, I don't need to use scopes when I'm doing code generation. Also, LLVM doesn't support string initialization, so I need to use arraytype. When a function use reference parameter but I load the string as arraytype, I need to use `getelementptr` to do conversion. And when generate id code, how to identify it needs loading (e.g, variables as arguments or appear on the rhs of the expression) or not (e.g, gloabl variable, lval) is a challenge.
+
+
+Overall, I spent a lot of time on this project, but I'm really excited when the code gives the correct result. My code can pass the testcases, but there're more need to implement, such as code generation for `LAND` and `LOR`, which don't have built-in function (e.g., _and, add) in builder. Functions how to return a reference type are not implemented. If I have time in the future, I may look into it.

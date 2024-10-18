@@ -1,0 +1,3182 @@
+Terminals unused in grammar
+
+   TVOID
+
+
+Grammar
+
+    0 $accept: start $end
+
+    1 start: program SCANEOF
+
+    2 program: %empty
+    3        | decl program
+
+    4 decl: global_decl
+    5     | function_decl
+
+    6 global_decl: GLOBAL ID ASSIGN global_exp SEMICOLON
+
+    7 function_decl: type ID LPAREN args RPAREN block
+
+    8 arg: type ID
+
+    9 args: %empty
+   10     | arg args_follow
+
+   11 args_follow: %empty
+   12            | COMMA arg args_follow
+
+   13 block: LBRACE stmts RBRACE
+
+   14 stmts: %empty
+   15      | stmt stmts
+
+   16 type: TINT
+   17     | TBOOL
+   18     | ref
+
+   19 ref: TSTRING
+   20    | type LBRACKET RBRACKET
+
+   21 global_exps: %empty
+   22            | global_exp global_exps_follow
+
+   23 global_exps_follow: %empty
+   24                   | COMMA global_exp global_exps_follow
+
+   25 global_exp: INTLITERAL
+   26           | STRINGLITERAL
+   27           | TRUE_
+   28           | FALSE_
+   29           | type NUL
+   30           | NEW type LBRACKET RBRACKET LBRACE global_exps RBRACE
+
+   31 stmt: lhs ASSIGN exp SEMICOLON
+   32     | var_decl SEMICOLON
+   33     | RETURN exp SEMICOLON
+   34     | RETURN SEMICOLON
+   35     | ID LPAREN exps RPAREN SEMICOLON
+   36     | if_stmt
+   37     | FOR LPAREN var_decls SEMICOLON exp_opt SEMICOLON stmt_opt RPAREN block
+   38     | WHILE LPAREN exp RPAREN block
+
+   39 stmt_opt: %empty
+   40         | stmt
+
+   41 exp_opt: %empty
+   42        | exp
+
+   43 if_stmt: IF LPAREN exp RPAREN block else_stmt
+
+   44 else_stmt: %empty
+   45          | ELSE block
+   46          | ELSE if_stmt
+
+   47 lhs: ID
+   48    | exp LBRACKET exp RBRACKET
+
+   49 var_decls: %empty
+   50          | var_decl var_decls_follow
+
+   51 var_decls_follow: %empty
+   52                 | COMMA var_decl var_decls_follow
+
+   53 var_decl: VAR ID ASSIGN exp
+
+   54 exps: %empty
+   55     | exp exps_follow
+
+   56 exps_follow: %empty
+   57            | COMMA exp exps_follow
+
+   58 exp: ID
+   59    | INTLITERAL
+   60    | STRINGLITERAL
+   61    | TRUE_
+   62    | FALSE_
+   63    | type NUL
+   64    | ID LPAREN exps RPAREN
+   65    | NEW type LBRACKET RBRACKET LBRACE exps RBRACE
+   66    | NEW type LBRACKET exp RBRACKET
+   67    | LPAREN exp RPAREN
+   68    | exp LBRACKET exp RBRACKET
+   69    | exp STAR exp
+   70    | exp PLUS exp
+   71    | exp MINUS exp
+   72    | exp LSHIFT exp
+   73    | exp RLSHIFT exp
+   74    | exp RASHIFT exp
+   75    | exp LESS exp
+   76    | exp LESSEQ exp
+   77    | exp GREAT exp
+   78    | exp GREATEQ exp
+   79    | exp EQ exp
+   80    | exp NEQ exp
+   81    | exp LAND exp
+   82    | exp LOR exp
+   83    | exp BAND exp
+   84    | exp BOR exp
+   85    | MINUS exp
+   86    | NOT exp
+   87    | TILDE exp
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+error (256)
+NUL (258) 29 63
+TRUE_ (259) 27 61
+FALSE_ (260) 28 62
+TVOID (261)
+TINT (262) 16
+TSTRING (263) 19
+TBOOL (264) 17
+IF (265) 43
+ELSE (266) 45 46
+WHILE (267) 38
+FOR (268) 37
+RETURN (269) 33 34
+NEW (270) 30 65 66
+VAR (271) 53
+GLOBAL (272) 6
+SCANEOF (273) 1
+SEMICOLON (274) 6 31 32 33 34 35 37
+COMMA (275) 12 24 52 57
+ASSIGN (276) 6 31 53
+INTLITERAL (277) 25 59
+STRINGLITERAL (278) 26 60
+ID (279) 6 7 8 35 47 53 58 64
+LPAREN (280) 7 35 37 38 43 64 67
+RPAREN (281) 7 35 37 38 43 64 67
+LBRACKET (282) 20 30 48 65 66 68
+RBRACKET (283) 20 30 48 65 66 68
+LBRACE (284) 13 30 65
+RBRACE (285) 13 30 65
+BOR (286) 84
+BAND (287) 83
+LOR (288) 82
+LAND (289) 81
+EQ (290) 79
+NEQ (291) 80
+LESS (292) 75
+LESSEQ (293) 76
+GREAT (294) 77
+GREATEQ (295) 78
+LSHIFT (296) 72
+RLSHIFT (297) 73
+RASHIFT (298) 74
+PLUS (299) 70
+MINUS (300) 71 85
+STAR (301) 69
+UMINUS (302)
+NOT (303) 86
+TILDE (304) 87
+
+
+Nonterminals, with rules where they appear
+
+$accept (50)
+    on left: 0
+start (51)
+    on left: 1, on right: 0
+program (52)
+    on left: 2 3, on right: 1 3
+decl (53)
+    on left: 4 5, on right: 3
+global_decl (54)
+    on left: 6, on right: 4
+function_decl (55)
+    on left: 7, on right: 5
+arg (56)
+    on left: 8, on right: 10 12
+args (57)
+    on left: 9 10, on right: 7
+args_follow (58)
+    on left: 11 12, on right: 10 12
+block (59)
+    on left: 13, on right: 7 37 38 43 45
+stmts (60)
+    on left: 14 15, on right: 13 15
+type (61)
+    on left: 16 17 18, on right: 7 8 20 29 30 63 65 66
+ref (62)
+    on left: 19 20, on right: 18
+global_exps (63)
+    on left: 21 22, on right: 30
+global_exps_follow (64)
+    on left: 23 24, on right: 22 24
+global_exp (65)
+    on left: 25 26 27 28 29 30, on right: 6 22 24
+stmt (66)
+    on left: 31 32 33 34 35 36 37 38, on right: 15 40
+stmt_opt (67)
+    on left: 39 40, on right: 37
+exp_opt (68)
+    on left: 41 42, on right: 37
+if_stmt (69)
+    on left: 43, on right: 36 46
+else_stmt (70)
+    on left: 44 45 46, on right: 43
+lhs (71)
+    on left: 47 48, on right: 31
+var_decls (72)
+    on left: 49 50, on right: 37
+var_decls_follow (73)
+    on left: 51 52, on right: 50 52
+var_decl (74)
+    on left: 53, on right: 32 50 52
+exps (75)
+    on left: 54 55, on right: 35 64 65
+exps_follow (76)
+    on left: 56 57, on right: 55 57
+exp (77)
+    on left: 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75
+    76 77 78 79 80 81 82 83 84 85 86 87, on right: 31 33 38 42 43 48
+    53 55 57 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83
+    84 85 86 87
+
+
+State 0
+
+    0 $accept: . start $end
+
+    TINT     shift, and go to state 1
+    TSTRING  shift, and go to state 2
+    TBOOL    shift, and go to state 3
+    GLOBAL   shift, and go to state 4
+
+    $default  reduce using rule 2 (program)
+
+    start          go to state 5
+    program        go to state 6
+    decl           go to state 7
+    global_decl    go to state 8
+    function_decl  go to state 9
+    type           go to state 10
+    ref            go to state 11
+
+
+State 1
+
+   16 type: TINT .
+
+    $default  reduce using rule 16 (type)
+
+
+State 2
+
+   19 ref: TSTRING .
+
+    $default  reduce using rule 19 (ref)
+
+
+State 3
+
+   17 type: TBOOL .
+
+    $default  reduce using rule 17 (type)
+
+
+State 4
+
+    6 global_decl: GLOBAL . ID ASSIGN global_exp SEMICOLON
+
+    ID  shift, and go to state 12
+
+
+State 5
+
+    0 $accept: start . $end
+
+    $end  shift, and go to state 13
+
+
+State 6
+
+    1 start: program . SCANEOF
+
+    SCANEOF  shift, and go to state 14
+
+
+State 7
+
+    3 program: decl . program
+
+    TINT     shift, and go to state 1
+    TSTRING  shift, and go to state 2
+    TBOOL    shift, and go to state 3
+    GLOBAL   shift, and go to state 4
+
+    $default  reduce using rule 2 (program)
+
+    program        go to state 15
+    decl           go to state 7
+    global_decl    go to state 8
+    function_decl  go to state 9
+    type           go to state 10
+    ref            go to state 11
+
+
+State 8
+
+    4 decl: global_decl .
+
+    $default  reduce using rule 4 (decl)
+
+
+State 9
+
+    5 decl: function_decl .
+
+    $default  reduce using rule 5 (decl)
+
+
+State 10
+
+    7 function_decl: type . ID LPAREN args RPAREN block
+   20 ref: type . LBRACKET RBRACKET
+
+    ID        shift, and go to state 16
+    LBRACKET  shift, and go to state 17
+
+
+State 11
+
+   18 type: ref .
+
+    $default  reduce using rule 18 (type)
+
+
+State 12
+
+    6 global_decl: GLOBAL ID . ASSIGN global_exp SEMICOLON
+
+    ASSIGN  shift, and go to state 18
+
+
+State 13
+
+    0 $accept: start $end .
+
+    $default  accept
+
+
+State 14
+
+    1 start: program SCANEOF .
+
+    $default  reduce using rule 1 (start)
+
+
+State 15
+
+    3 program: decl program .
+
+    $default  reduce using rule 3 (program)
+
+
+State 16
+
+    7 function_decl: type ID . LPAREN args RPAREN block
+
+    LPAREN  shift, and go to state 19
+
+
+State 17
+
+   20 ref: type LBRACKET . RBRACKET
+
+    RBRACKET  shift, and go to state 20
+
+
+State 18
+
+    6 global_decl: GLOBAL ID ASSIGN . global_exp SEMICOLON
+
+    TRUE_          shift, and go to state 21
+    FALSE_         shift, and go to state 22
+    TINT           shift, and go to state 1
+    TSTRING        shift, and go to state 2
+    TBOOL          shift, and go to state 3
+    NEW            shift, and go to state 23
+    INTLITERAL     shift, and go to state 24
+    STRINGLITERAL  shift, and go to state 25
+
+    type        go to state 26
+    ref         go to state 11
+    global_exp  go to state 27
+
+
+State 19
+
+    7 function_decl: type ID LPAREN . args RPAREN block
+
+    TINT     shift, and go to state 1
+    TSTRING  shift, and go to state 2
+    TBOOL    shift, and go to state 3
+
+    $default  reduce using rule 9 (args)
+
+    arg   go to state 28
+    args  go to state 29
+    type  go to state 30
+    ref   go to state 11
+
+
+State 20
+
+   20 ref: type LBRACKET RBRACKET .
+
+    $default  reduce using rule 20 (ref)
+
+
+State 21
+
+   27 global_exp: TRUE_ .
+
+    $default  reduce using rule 27 (global_exp)
+
+
+State 22
+
+   28 global_exp: FALSE_ .
+
+    $default  reduce using rule 28 (global_exp)
+
+
+State 23
+
+   30 global_exp: NEW . type LBRACKET RBRACKET LBRACE global_exps RBRACE
+
+    TINT     shift, and go to state 1
+    TSTRING  shift, and go to state 2
+    TBOOL    shift, and go to state 3
+
+    type  go to state 31
+    ref   go to state 11
+
+
+State 24
+
+   25 global_exp: INTLITERAL .
+
+    $default  reduce using rule 25 (global_exp)
+
+
+State 25
+
+   26 global_exp: STRINGLITERAL .
+
+    $default  reduce using rule 26 (global_exp)
+
+
+State 26
+
+   20 ref: type . LBRACKET RBRACKET
+   29 global_exp: type . NUL
+
+    NUL       shift, and go to state 32
+    LBRACKET  shift, and go to state 17
+
+
+State 27
+
+    6 global_decl: GLOBAL ID ASSIGN global_exp . SEMICOLON
+
+    SEMICOLON  shift, and go to state 33
+
+
+State 28
+
+   10 args: arg . args_follow
+
+    COMMA  shift, and go to state 34
+
+    $default  reduce using rule 11 (args_follow)
+
+    args_follow  go to state 35
+
+
+State 29
+
+    7 function_decl: type ID LPAREN args . RPAREN block
+
+    RPAREN  shift, and go to state 36
+
+
+State 30
+
+    8 arg: type . ID
+   20 ref: type . LBRACKET RBRACKET
+
+    ID        shift, and go to state 37
+    LBRACKET  shift, and go to state 17
+
+
+State 31
+
+   20 ref: type . LBRACKET RBRACKET
+   30 global_exp: NEW type . LBRACKET RBRACKET LBRACE global_exps RBRACE
+
+    LBRACKET  shift, and go to state 38
+
+
+State 32
+
+   29 global_exp: type NUL .
+
+    $default  reduce using rule 29 (global_exp)
+
+
+State 33
+
+    6 global_decl: GLOBAL ID ASSIGN global_exp SEMICOLON .
+
+    $default  reduce using rule 6 (global_decl)
+
+
+State 34
+
+   12 args_follow: COMMA . arg args_follow
+
+    TINT     shift, and go to state 1
+    TSTRING  shift, and go to state 2
+    TBOOL    shift, and go to state 3
+
+    arg   go to state 39
+    type  go to state 30
+    ref   go to state 11
+
+
+State 35
+
+   10 args: arg args_follow .
+
+    $default  reduce using rule 10 (args)
+
+
+State 36
+
+    7 function_decl: type ID LPAREN args RPAREN . block
+
+    LBRACE  shift, and go to state 40
+
+    block  go to state 41
+
+
+State 37
+
+    8 arg: type ID .
+
+    $default  reduce using rule 8 (arg)
+
+
+State 38
+
+   20 ref: type LBRACKET . RBRACKET
+   30 global_exp: NEW type LBRACKET . RBRACKET LBRACE global_exps RBRACE
+
+    RBRACKET  shift, and go to state 42
+
+
+State 39
+
+   12 args_follow: COMMA arg . args_follow
+
+    COMMA  shift, and go to state 34
+
+    $default  reduce using rule 11 (args_follow)
+
+    args_follow  go to state 43
+
+
+State 40
+
+   13 block: LBRACE . stmts RBRACE
+
+    TRUE_          shift, and go to state 44
+    FALSE_         shift, and go to state 45
+    TINT           shift, and go to state 1
+    TSTRING        shift, and go to state 2
+    TBOOL          shift, and go to state 3
+    IF             shift, and go to state 46
+    WHILE          shift, and go to state 47
+    FOR            shift, and go to state 48
+    RETURN         shift, and go to state 49
+    NEW            shift, and go to state 50
+    VAR            shift, and go to state 51
+    INTLITERAL     shift, and go to state 52
+    STRINGLITERAL  shift, and go to state 53
+    ID             shift, and go to state 54
+    LPAREN         shift, and go to state 55
+    MINUS          shift, and go to state 56
+    NOT            shift, and go to state 57
+    TILDE          shift, and go to state 58
+
+    $default  reduce using rule 14 (stmts)
+
+    stmts     go to state 59
+    type      go to state 60
+    ref       go to state 11
+    stmt      go to state 61
+    if_stmt   go to state 62
+    lhs       go to state 63
+    var_decl  go to state 64
+    exp       go to state 65
+
+
+State 41
+
+    7 function_decl: type ID LPAREN args RPAREN block .
+
+    $default  reduce using rule 7 (function_decl)
+
+
+State 42
+
+   20 ref: type LBRACKET RBRACKET .
+   30 global_exp: NEW type LBRACKET RBRACKET . LBRACE global_exps RBRACE
+
+    LBRACE  shift, and go to state 66
+
+    $default  reduce using rule 20 (ref)
+
+
+State 43
+
+   12 args_follow: COMMA arg args_follow .
+
+    $default  reduce using rule 12 (args_follow)
+
+
+State 44
+
+   61 exp: TRUE_ .
+
+    $default  reduce using rule 61 (exp)
+
+
+State 45
+
+   62 exp: FALSE_ .
+
+    $default  reduce using rule 62 (exp)
+
+
+State 46
+
+   43 if_stmt: IF . LPAREN exp RPAREN block else_stmt
+
+    LPAREN  shift, and go to state 67
+
+
+State 47
+
+   38 stmt: WHILE . LPAREN exp RPAREN block
+
+    LPAREN  shift, and go to state 68
+
+
+State 48
+
+   37 stmt: FOR . LPAREN var_decls SEMICOLON exp_opt SEMICOLON stmt_opt RPAREN block
+
+    LPAREN  shift, and go to state 69
+
+
+State 49
+
+   33 stmt: RETURN . exp SEMICOLON
+   34     | RETURN . SEMICOLON
+
+    TRUE_          shift, and go to state 44
+    FALSE_         shift, and go to state 45
+    TINT           shift, and go to state 1
+    TSTRING        shift, and go to state 2
+    TBOOL          shift, and go to state 3
+    NEW            shift, and go to state 50
+    SEMICOLON      shift, and go to state 70
+    INTLITERAL     shift, and go to state 52
+    STRINGLITERAL  shift, and go to state 53
+    ID             shift, and go to state 71
+    LPAREN         shift, and go to state 55
+    MINUS          shift, and go to state 56
+    NOT            shift, and go to state 57
+    TILDE          shift, and go to state 58
+
+    type  go to state 60
+    ref   go to state 11
+    exp   go to state 72
+
+
+State 50
+
+   65 exp: NEW . type LBRACKET RBRACKET LBRACE exps RBRACE
+   66    | NEW . type LBRACKET exp RBRACKET
+
+    TINT     shift, and go to state 1
+    TSTRING  shift, and go to state 2
+    TBOOL    shift, and go to state 3
+
+    type  go to state 73
+    ref   go to state 11
+
+
+State 51
+
+   53 var_decl: VAR . ID ASSIGN exp
+
+    ID  shift, and go to state 74
+
+
+State 52
+
+   59 exp: INTLITERAL .
+
+    $default  reduce using rule 59 (exp)
+
+
+State 53
+
+   60 exp: STRINGLITERAL .
+
+    $default  reduce using rule 60 (exp)
+
+
+State 54
+
+   35 stmt: ID . LPAREN exps RPAREN SEMICOLON
+   47 lhs: ID .
+   58 exp: ID .
+   64    | ID . LPAREN exps RPAREN
+
+    LPAREN  shift, and go to state 75
+
+    ASSIGN    reduce using rule 47 (lhs)
+    $default  reduce using rule 58 (exp)
+
+
+State 55
+
+   67 exp: LPAREN . exp RPAREN
+
+    TRUE_          shift, and go to state 44
+    FALSE_         shift, and go to state 45
+    TINT           shift, and go to state 1
+    TSTRING        shift, and go to state 2
+    TBOOL          shift, and go to state 3
+    NEW            shift, and go to state 50
+    INTLITERAL     shift, and go to state 52
+    STRINGLITERAL  shift, and go to state 53
+    ID             shift, and go to state 71
+    LPAREN         shift, and go to state 55
+    MINUS          shift, and go to state 56
+    NOT            shift, and go to state 57
+    TILDE          shift, and go to state 58
+
+    type  go to state 60
+    ref   go to state 11
+    exp   go to state 76
+
+
+State 56
+
+   85 exp: MINUS . exp
+
+    TRUE_          shift, and go to state 44
+    FALSE_         shift, and go to state 45
+    TINT           shift, and go to state 1
+    TSTRING        shift, and go to state 2
+    TBOOL          shift, and go to state 3
+    NEW            shift, and go to state 50
+    INTLITERAL     shift, and go to state 52
+    STRINGLITERAL  shift, and go to state 53
+    ID             shift, and go to state 71
+    LPAREN         shift, and go to state 55
+    MINUS          shift, and go to state 56
+    NOT            shift, and go to state 57
+    TILDE          shift, and go to state 58
+
+    type  go to state 60
+    ref   go to state 11
+    exp   go to state 77
+
+
+State 57
+
+   86 exp: NOT . exp
+
+    TRUE_          shift, and go to state 44
+    FALSE_         shift, and go to state 45
+    TINT           shift, and go to state 1
+    TSTRING        shift, and go to state 2
+    TBOOL          shift, and go to state 3
+    NEW            shift, and go to state 50
+    INTLITERAL     shift, and go to state 52
+    STRINGLITERAL  shift, and go to state 53
+    ID             shift, and go to state 71
+    LPAREN         shift, and go to state 55
+    MINUS          shift, and go to state 56
+    NOT            shift, and go to state 57
+    TILDE          shift, and go to state 58
+
+    type  go to state 60
+    ref   go to state 11
+    exp   go to state 78
+
+
+State 58
+
+   87 exp: TILDE . exp
+
+    TRUE_          shift, and go to state 44
+    FALSE_         shift, and go to state 45
+    TINT           shift, and go to state 1
+    TSTRING        shift, and go to state 2
+    TBOOL          shift, and go to state 3
+    NEW            shift, and go to state 50
+    INTLITERAL     shift, and go to state 52
+    STRINGLITERAL  shift, and go to state 53
+    ID             shift, and go to state 71
+    LPAREN         shift, and go to state 55
+    MINUS          shift, and go to state 56
+    NOT            shift, and go to state 57
+    TILDE          shift, and go to state 58
+
+    type  go to state 60
+    ref   go to state 11
+    exp   go to state 79
+
+
+State 59
+
+   13 block: LBRACE stmts . RBRACE
+
+    RBRACE  shift, and go to state 80
+
+
+State 60
+
+   20 ref: type . LBRACKET RBRACKET
+   63 exp: type . NUL
+
+    NUL       shift, and go to state 81
+    LBRACKET  shift, and go to state 17
+
+
+State 61
+
+   15 stmts: stmt . stmts
+
+    TRUE_          shift, and go to state 44
+    FALSE_         shift, and go to state 45
+    TINT           shift, and go to state 1
+    TSTRING        shift, and go to state 2
+    TBOOL          shift, and go to state 3
+    IF             shift, and go to state 46
+    WHILE          shift, and go to state 47
+    FOR            shift, and go to state 48
+    RETURN         shift, and go to state 49
+    NEW            shift, and go to state 50
+    VAR            shift, and go to state 51
+    INTLITERAL     shift, and go to state 52
+    STRINGLITERAL  shift, and go to state 53
+    ID             shift, and go to state 54
+    LPAREN         shift, and go to state 55
+    MINUS          shift, and go to state 56
+    NOT            shift, and go to state 57
+    TILDE          shift, and go to state 58
+
+    $default  reduce using rule 14 (stmts)
+
+    stmts     go to state 82
+    type      go to state 60
+    ref       go to state 11
+    stmt      go to state 61
+    if_stmt   go to state 62
+    lhs       go to state 63
+    var_decl  go to state 64
+    exp       go to state 65
+
+
+State 62
+
+   36 stmt: if_stmt .
+
+    $default  reduce using rule 36 (stmt)
+
+
+State 63
+
+   31 stmt: lhs . ASSIGN exp SEMICOLON
+
+    ASSIGN  shift, and go to state 83
+
+
+State 64
+
+   32 stmt: var_decl . SEMICOLON
+
+    SEMICOLON  shift, and go to state 84
+
+
+State 65
+
+   48 lhs: exp . LBRACKET exp RBRACKET
+   68 exp: exp . LBRACKET exp RBRACKET
+   69    | exp . STAR exp
+   70    | exp . PLUS exp
+   71    | exp . MINUS exp
+   72    | exp . LSHIFT exp
+   73    | exp . RLSHIFT exp
+   74    | exp . RASHIFT exp
+   75    | exp . LESS exp
+   76    | exp . LESSEQ exp
+   77    | exp . GREAT exp
+   78    | exp . GREATEQ exp
+   79    | exp . EQ exp
+   80    | exp . NEQ exp
+   81    | exp . LAND exp
+   82    | exp . LOR exp
+   83    | exp . BAND exp
+   84    | exp . BOR exp
+
+    LBRACKET  shift, and go to state 85
+    BOR       shift, and go to state 86
+    BAND      shift, and go to state 87
+    LOR       shift, and go to state 88
+    LAND      shift, and go to state 89
+    EQ        shift, and go to state 90
+    NEQ       shift, and go to state 91
+    LESS      shift, and go to state 92
+    LESSEQ    shift, and go to state 93
+    GREAT     shift, and go to state 94
+    GREATEQ   shift, and go to state 95
+    LSHIFT    shift, and go to state 96
+    RLSHIFT   shift, and go to state 97
+    RASHIFT   shift, and go to state 98
+    PLUS      shift, and go to state 99
+    MINUS     shift, and go to state 100
+    STAR      shift, and go to state 101
+
+
+State 66
+
+   30 global_exp: NEW type LBRACKET RBRACKET LBRACE . global_exps RBRACE
+
+    TRUE_          shift, and go to state 21
+    FALSE_         shift, and go to state 22
+    TINT           shift, and go to state 1
+    TSTRING        shift, and go to state 2
+    TBOOL          shift, and go to state 3
+    NEW            shift, and go to state 23
+    INTLITERAL     shift, and go to state 24
+    STRINGLITERAL  shift, and go to state 25
+
+    $default  reduce using rule 21 (global_exps)
+
+    type         go to state 26
+    ref          go to state 11
+    global_exps  go to state 102
+    global_exp   go to state 103
+
+
+State 67
+
+   43 if_stmt: IF LPAREN . exp RPAREN block else_stmt
+
+    TRUE_          shift, and go to state 44
+    FALSE_         shift, and go to state 45
+    TINT           shift, and go to state 1
+    TSTRING        shift, and go to state 2
+    TBOOL          shift, and go to state 3
+    NEW            shift, and go to state 50
+    INTLITERAL     shift, and go to state 52
+    STRINGLITERAL  shift, and go to state 53
+    ID             shift, and go to state 71
+    LPAREN         shift, and go to state 55
+    MINUS          shift, and go to state 56
+    NOT            shift, and go to state 57
+    TILDE          shift, and go to state 58
+
+    type  go to state 60
+    ref   go to state 11
+    exp   go to state 104
+
+
+State 68
+
+   38 stmt: WHILE LPAREN . exp RPAREN block
+
+    TRUE_          shift, and go to state 44
+    FALSE_         shift, and go to state 45
+    TINT           shift, and go to state 1
+    TSTRING        shift, and go to state 2
+    TBOOL          shift, and go to state 3
+    NEW            shift, and go to state 50
+    INTLITERAL     shift, and go to state 52
+    STRINGLITERAL  shift, and go to state 53
+    ID             shift, and go to state 71
+    LPAREN         shift, and go to state 55
+    MINUS          shift, and go to state 56
+    NOT            shift, and go to state 57
+    TILDE          shift, and go to state 58
+
+    type  go to state 60
+    ref   go to state 11
+    exp   go to state 105
+
+
+State 69
+
+   37 stmt: FOR LPAREN . var_decls SEMICOLON exp_opt SEMICOLON stmt_opt RPAREN block
+
+    VAR  shift, and go to state 51
+
+    $default  reduce using rule 49 (var_decls)
+
+    var_decls  go to state 106
+    var_decl   go to state 107
+
+
+State 70
+
+   34 stmt: RETURN SEMICOLON .
+
+    $default  reduce using rule 34 (stmt)
+
+
+State 71
+
+   58 exp: ID .
+   64    | ID . LPAREN exps RPAREN
+
+    LPAREN  shift, and go to state 108
+
+    $default  reduce using rule 58 (exp)
+
+
+State 72
+
+   33 stmt: RETURN exp . SEMICOLON
+   68 exp: exp . LBRACKET exp RBRACKET
+   69    | exp . STAR exp
+   70    | exp . PLUS exp
+   71    | exp . MINUS exp
+   72    | exp . LSHIFT exp
+   73    | exp . RLSHIFT exp
+   74    | exp . RASHIFT exp
+   75    | exp . LESS exp
+   76    | exp . LESSEQ exp
+   77    | exp . GREAT exp
+   78    | exp . GREATEQ exp
+   79    | exp . EQ exp
+   80    | exp . NEQ exp
+   81    | exp . LAND exp
+   82    | exp . LOR exp
+   83    | exp . BAND exp
+   84    | exp . BOR exp
+
+    SEMICOLON  shift, and go to state 109
+    LBRACKET   shift, and go to state 110
+    BOR        shift, and go to state 86
+    BAND       shift, and go to state 87
+    LOR        shift, and go to state 88
+    LAND       shift, and go to state 89
+    EQ         shift, and go to state 90
+    NEQ        shift, and go to state 91
+    LESS       shift, and go to state 92
+    LESSEQ     shift, and go to state 93
+    GREAT      shift, and go to state 94
+    GREATEQ    shift, and go to state 95
+    LSHIFT     shift, and go to state 96
+    RLSHIFT    shift, and go to state 97
+    RASHIFT    shift, and go to state 98
+    PLUS       shift, and go to state 99
+    MINUS      shift, and go to state 100
+    STAR       shift, and go to state 101
+
+
+State 73
+
+   20 ref: type . LBRACKET RBRACKET
+   65 exp: NEW type . LBRACKET RBRACKET LBRACE exps RBRACE
+   66    | NEW type . LBRACKET exp RBRACKET
+
+    LBRACKET  shift, and go to state 111
+
+
+State 74
+
+   53 var_decl: VAR ID . ASSIGN exp
+
+    ASSIGN  shift, and go to state 112
+
+
+State 75
+
+   35 stmt: ID LPAREN . exps RPAREN SEMICOLON
+   64 exp: ID LPAREN . exps RPAREN
+
+    TRUE_          shift, and go to state 44
+    FALSE_         shift, and go to state 45
+    TINT           shift, and go to state 1
+    TSTRING        shift, and go to state 2
+    TBOOL          shift, and go to state 3
+    NEW            shift, and go to state 50
+    INTLITERAL     shift, and go to state 52
+    STRINGLITERAL  shift, and go to state 53
+    ID             shift, and go to state 71
+    LPAREN         shift, and go to state 55
+    MINUS          shift, and go to state 56
+    NOT            shift, and go to state 57
+    TILDE          shift, and go to state 58
+
+    $default  reduce using rule 54 (exps)
+
+    type  go to state 60
+    ref   go to state 11
+    exps  go to state 113
+    exp   go to state 114
+
+
+State 76
+
+   67 exp: LPAREN exp . RPAREN
+   68    | exp . LBRACKET exp RBRACKET
+   69    | exp . STAR exp
+   70    | exp . PLUS exp
+   71    | exp . MINUS exp
+   72    | exp . LSHIFT exp
+   73    | exp . RLSHIFT exp
+   74    | exp . RASHIFT exp
+   75    | exp . LESS exp
+   76    | exp . LESSEQ exp
+   77    | exp . GREAT exp
+   78    | exp . GREATEQ exp
+   79    | exp . EQ exp
+   80    | exp . NEQ exp
+   81    | exp . LAND exp
+   82    | exp . LOR exp
+   83    | exp . BAND exp
+   84    | exp . BOR exp
+
+    RPAREN    shift, and go to state 115
+    LBRACKET  shift, and go to state 110
+    BOR       shift, and go to state 86
+    BAND      shift, and go to state 87
+    LOR       shift, and go to state 88
+    LAND      shift, and go to state 89
+    EQ        shift, and go to state 90
+    NEQ       shift, and go to state 91
+    LESS      shift, and go to state 92
+    LESSEQ    shift, and go to state 93
+    GREAT     shift, and go to state 94
+    GREATEQ   shift, and go to state 95
+    LSHIFT    shift, and go to state 96
+    RLSHIFT   shift, and go to state 97
+    RASHIFT   shift, and go to state 98
+    PLUS      shift, and go to state 99
+    MINUS     shift, and go to state 100
+    STAR      shift, and go to state 101
+
+
+State 77
+
+   68 exp: exp . LBRACKET exp RBRACKET
+   69    | exp . STAR exp
+   70    | exp . PLUS exp
+   71    | exp . MINUS exp
+   72    | exp . LSHIFT exp
+   73    | exp . RLSHIFT exp
+   74    | exp . RASHIFT exp
+   75    | exp . LESS exp
+   76    | exp . LESSEQ exp
+   77    | exp . GREAT exp
+   78    | exp . GREATEQ exp
+   79    | exp . EQ exp
+   80    | exp . NEQ exp
+   81    | exp . LAND exp
+   82    | exp . LOR exp
+   83    | exp . BAND exp
+   84    | exp . BOR exp
+   85    | MINUS exp .
+
+    $default  reduce using rule 85 (exp)
+
+
+State 78
+
+   68 exp: exp . LBRACKET exp RBRACKET
+   69    | exp . STAR exp
+   70    | exp . PLUS exp
+   71    | exp . MINUS exp
+   72    | exp . LSHIFT exp
+   73    | exp . RLSHIFT exp
+   74    | exp . RASHIFT exp
+   75    | exp . LESS exp
+   76    | exp . LESSEQ exp
+   77    | exp . GREAT exp
+   78    | exp . GREATEQ exp
+   79    | exp . EQ exp
+   80    | exp . NEQ exp
+   81    | exp . LAND exp
+   82    | exp . LOR exp
+   83    | exp . BAND exp
+   84    | exp . BOR exp
+   86    | NOT exp .
+
+    $default  reduce using rule 86 (exp)
+
+
+State 79
+
+   68 exp: exp . LBRACKET exp RBRACKET
+   69    | exp . STAR exp
+   70    | exp . PLUS exp
+   71    | exp . MINUS exp
+   72    | exp . LSHIFT exp
+   73    | exp . RLSHIFT exp
+   74    | exp . RASHIFT exp
+   75    | exp . LESS exp
+   76    | exp . LESSEQ exp
+   77    | exp . GREAT exp
+   78    | exp . GREATEQ exp
+   79    | exp . EQ exp
+   80    | exp . NEQ exp
+   81    | exp . LAND exp
+   82    | exp . LOR exp
+   83    | exp . BAND exp
+   84    | exp . BOR exp
+   87    | TILDE exp .
+
+    $default  reduce using rule 87 (exp)
+
+
+State 80
+
+   13 block: LBRACE stmts RBRACE .
+
+    $default  reduce using rule 13 (block)
+
+
+State 81
+
+   63 exp: type NUL .
+
+    $default  reduce using rule 63 (exp)
+
+
+State 82
+
+   15 stmts: stmt stmts .
+
+    $default  reduce using rule 15 (stmts)
+
+
+State 83
+
+   31 stmt: lhs ASSIGN . exp SEMICOLON
+
+    TRUE_          shift, and go to state 44
+    FALSE_         shift, and go to state 45
+    TINT           shift, and go to state 1
+    TSTRING        shift, and go to state 2
+    TBOOL          shift, and go to state 3
+    NEW            shift, and go to state 50
+    INTLITERAL     shift, and go to state 52
+    STRINGLITERAL  shift, and go to state 53
+    ID             shift, and go to state 71
+    LPAREN         shift, and go to state 55
+    MINUS          shift, and go to state 56
+    NOT            shift, and go to state 57
+    TILDE          shift, and go to state 58
+
+    type  go to state 60
+    ref   go to state 11
+    exp   go to state 116
+
+
+State 84
+
+   32 stmt: var_decl SEMICOLON .
+
+    $default  reduce using rule 32 (stmt)
+
+
+State 85
+
+   48 lhs: exp LBRACKET . exp RBRACKET
+   68 exp: exp LBRACKET . exp RBRACKET
+
+    TRUE_          shift, and go to state 44
+    FALSE_         shift, and go to state 45
+    TINT           shift, and go to state 1
+    TSTRING        shift, and go to state 2
+    TBOOL          shift, and go to state 3
+    NEW            shift, and go to state 50
+    INTLITERAL     shift, and go to state 52
+    STRINGLITERAL  shift, and go to state 53
+    ID             shift, and go to state 71
+    LPAREN         shift, and go to state 55
+    MINUS          shift, and go to state 56
+    NOT            shift, and go to state 57
+    TILDE          shift, and go to state 58
+
+    type  go to state 60
+    ref   go to state 11
+    exp   go to state 117
+
+
+State 86
+
+   84 exp: exp BOR . exp
+
+    TRUE_          shift, and go to state 44
+    FALSE_         shift, and go to state 45
+    TINT           shift, and go to state 1
+    TSTRING        shift, and go to state 2
+    TBOOL          shift, and go to state 3
+    NEW            shift, and go to state 50
+    INTLITERAL     shift, and go to state 52
+    STRINGLITERAL  shift, and go to state 53
+    ID             shift, and go to state 71
+    LPAREN         shift, and go to state 55
+    MINUS          shift, and go to state 56
+    NOT            shift, and go to state 57
+    TILDE          shift, and go to state 58
+
+    type  go to state 60
+    ref   go to state 11
+    exp   go to state 118
+
+
+State 87
+
+   83 exp: exp BAND . exp
+
+    TRUE_          shift, and go to state 44
+    FALSE_         shift, and go to state 45
+    TINT           shift, and go to state 1
+    TSTRING        shift, and go to state 2
+    TBOOL          shift, and go to state 3
+    NEW            shift, and go to state 50
+    INTLITERAL     shift, and go to state 52
+    STRINGLITERAL  shift, and go to state 53
+    ID             shift, and go to state 71
+    LPAREN         shift, and go to state 55
+    MINUS          shift, and go to state 56
+    NOT            shift, and go to state 57
+    TILDE          shift, and go to state 58
+
+    type  go to state 60
+    ref   go to state 11
+    exp   go to state 119
+
+
+State 88
+
+   82 exp: exp LOR . exp
+
+    TRUE_          shift, and go to state 44
+    FALSE_         shift, and go to state 45
+    TINT           shift, and go to state 1
+    TSTRING        shift, and go to state 2
+    TBOOL          shift, and go to state 3
+    NEW            shift, and go to state 50
+    INTLITERAL     shift, and go to state 52
+    STRINGLITERAL  shift, and go to state 53
+    ID             shift, and go to state 71
+    LPAREN         shift, and go to state 55
+    MINUS          shift, and go to state 56
+    NOT            shift, and go to state 57
+    TILDE          shift, and go to state 58
+
+    type  go to state 60
+    ref   go to state 11
+    exp   go to state 120
+
+
+State 89
+
+   81 exp: exp LAND . exp
+
+    TRUE_          shift, and go to state 44
+    FALSE_         shift, and go to state 45
+    TINT           shift, and go to state 1
+    TSTRING        shift, and go to state 2
+    TBOOL          shift, and go to state 3
+    NEW            shift, and go to state 50
+    INTLITERAL     shift, and go to state 52
+    STRINGLITERAL  shift, and go to state 53
+    ID             shift, and go to state 71
+    LPAREN         shift, and go to state 55
+    MINUS          shift, and go to state 56
+    NOT            shift, and go to state 57
+    TILDE          shift, and go to state 58
+
+    type  go to state 60
+    ref   go to state 11
+    exp   go to state 121
+
+
+State 90
+
+   79 exp: exp EQ . exp
+
+    TRUE_          shift, and go to state 44
+    FALSE_         shift, and go to state 45
+    TINT           shift, and go to state 1
+    TSTRING        shift, and go to state 2
+    TBOOL          shift, and go to state 3
+    NEW            shift, and go to state 50
+    INTLITERAL     shift, and go to state 52
+    STRINGLITERAL  shift, and go to state 53
+    ID             shift, and go to state 71
+    LPAREN         shift, and go to state 55
+    MINUS          shift, and go to state 56
+    NOT            shift, and go to state 57
+    TILDE          shift, and go to state 58
+
+    type  go to state 60
+    ref   go to state 11
+    exp   go to state 122
+
+
+State 91
+
+   80 exp: exp NEQ . exp
+
+    TRUE_          shift, and go to state 44
+    FALSE_         shift, and go to state 45
+    TINT           shift, and go to state 1
+    TSTRING        shift, and go to state 2
+    TBOOL          shift, and go to state 3
+    NEW            shift, and go to state 50
+    INTLITERAL     shift, and go to state 52
+    STRINGLITERAL  shift, and go to state 53
+    ID             shift, and go to state 71
+    LPAREN         shift, and go to state 55
+    MINUS          shift, and go to state 56
+    NOT            shift, and go to state 57
+    TILDE          shift, and go to state 58
+
+    type  go to state 60
+    ref   go to state 11
+    exp   go to state 123
+
+
+State 92
+
+   75 exp: exp LESS . exp
+
+    TRUE_          shift, and go to state 44
+    FALSE_         shift, and go to state 45
+    TINT           shift, and go to state 1
+    TSTRING        shift, and go to state 2
+    TBOOL          shift, and go to state 3
+    NEW            shift, and go to state 50
+    INTLITERAL     shift, and go to state 52
+    STRINGLITERAL  shift, and go to state 53
+    ID             shift, and go to state 71
+    LPAREN         shift, and go to state 55
+    MINUS          shift, and go to state 56
+    NOT            shift, and go to state 57
+    TILDE          shift, and go to state 58
+
+    type  go to state 60
+    ref   go to state 11
+    exp   go to state 124
+
+
+State 93
+
+   76 exp: exp LESSEQ . exp
+
+    TRUE_          shift, and go to state 44
+    FALSE_         shift, and go to state 45
+    TINT           shift, and go to state 1
+    TSTRING        shift, and go to state 2
+    TBOOL          shift, and go to state 3
+    NEW            shift, and go to state 50
+    INTLITERAL     shift, and go to state 52
+    STRINGLITERAL  shift, and go to state 53
+    ID             shift, and go to state 71
+    LPAREN         shift, and go to state 55
+    MINUS          shift, and go to state 56
+    NOT            shift, and go to state 57
+    TILDE          shift, and go to state 58
+
+    type  go to state 60
+    ref   go to state 11
+    exp   go to state 125
+
+
+State 94
+
+   77 exp: exp GREAT . exp
+
+    TRUE_          shift, and go to state 44
+    FALSE_         shift, and go to state 45
+    TINT           shift, and go to state 1
+    TSTRING        shift, and go to state 2
+    TBOOL          shift, and go to state 3
+    NEW            shift, and go to state 50
+    INTLITERAL     shift, and go to state 52
+    STRINGLITERAL  shift, and go to state 53
+    ID             shift, and go to state 71
+    LPAREN         shift, and go to state 55
+    MINUS          shift, and go to state 56
+    NOT            shift, and go to state 57
+    TILDE          shift, and go to state 58
+
+    type  go to state 60
+    ref   go to state 11
+    exp   go to state 126
+
+
+State 95
+
+   78 exp: exp GREATEQ . exp
+
+    TRUE_          shift, and go to state 44
+    FALSE_         shift, and go to state 45
+    TINT           shift, and go to state 1
+    TSTRING        shift, and go to state 2
+    TBOOL          shift, and go to state 3
+    NEW            shift, and go to state 50
+    INTLITERAL     shift, and go to state 52
+    STRINGLITERAL  shift, and go to state 53
+    ID             shift, and go to state 71
+    LPAREN         shift, and go to state 55
+    MINUS          shift, and go to state 56
+    NOT            shift, and go to state 57
+    TILDE          shift, and go to state 58
+
+    type  go to state 60
+    ref   go to state 11
+    exp   go to state 127
+
+
+State 96
+
+   72 exp: exp LSHIFT . exp
+
+    TRUE_          shift, and go to state 44
+    FALSE_         shift, and go to state 45
+    TINT           shift, and go to state 1
+    TSTRING        shift, and go to state 2
+    TBOOL          shift, and go to state 3
+    NEW            shift, and go to state 50
+    INTLITERAL     shift, and go to state 52
+    STRINGLITERAL  shift, and go to state 53
+    ID             shift, and go to state 71
+    LPAREN         shift, and go to state 55
+    MINUS          shift, and go to state 56
+    NOT            shift, and go to state 57
+    TILDE          shift, and go to state 58
+
+    type  go to state 60
+    ref   go to state 11
+    exp   go to state 128
+
+
+State 97
+
+   73 exp: exp RLSHIFT . exp
+
+    TRUE_          shift, and go to state 44
+    FALSE_         shift, and go to state 45
+    TINT           shift, and go to state 1
+    TSTRING        shift, and go to state 2
+    TBOOL          shift, and go to state 3
+    NEW            shift, and go to state 50
+    INTLITERAL     shift, and go to state 52
+    STRINGLITERAL  shift, and go to state 53
+    ID             shift, and go to state 71
+    LPAREN         shift, and go to state 55
+    MINUS          shift, and go to state 56
+    NOT            shift, and go to state 57
+    TILDE          shift, and go to state 58
+
+    type  go to state 60
+    ref   go to state 11
+    exp   go to state 129
+
+
+State 98
+
+   74 exp: exp RASHIFT . exp
+
+    TRUE_          shift, and go to state 44
+    FALSE_         shift, and go to state 45
+    TINT           shift, and go to state 1
+    TSTRING        shift, and go to state 2
+    TBOOL          shift, and go to state 3
+    NEW            shift, and go to state 50
+    INTLITERAL     shift, and go to state 52
+    STRINGLITERAL  shift, and go to state 53
+    ID             shift, and go to state 71
+    LPAREN         shift, and go to state 55
+    MINUS          shift, and go to state 56
+    NOT            shift, and go to state 57
+    TILDE          shift, and go to state 58
+
+    type  go to state 60
+    ref   go to state 11
+    exp   go to state 130
+
+
+State 99
+
+   70 exp: exp PLUS . exp
+
+    TRUE_          shift, and go to state 44
+    FALSE_         shift, and go to state 45
+    TINT           shift, and go to state 1
+    TSTRING        shift, and go to state 2
+    TBOOL          shift, and go to state 3
+    NEW            shift, and go to state 50
+    INTLITERAL     shift, and go to state 52
+    STRINGLITERAL  shift, and go to state 53
+    ID             shift, and go to state 71
+    LPAREN         shift, and go to state 55
+    MINUS          shift, and go to state 56
+    NOT            shift, and go to state 57
+    TILDE          shift, and go to state 58
+
+    type  go to state 60
+    ref   go to state 11
+    exp   go to state 131
+
+
+State 100
+
+   71 exp: exp MINUS . exp
+
+    TRUE_          shift, and go to state 44
+    FALSE_         shift, and go to state 45
+    TINT           shift, and go to state 1
+    TSTRING        shift, and go to state 2
+    TBOOL          shift, and go to state 3
+    NEW            shift, and go to state 50
+    INTLITERAL     shift, and go to state 52
+    STRINGLITERAL  shift, and go to state 53
+    ID             shift, and go to state 71
+    LPAREN         shift, and go to state 55
+    MINUS          shift, and go to state 56
+    NOT            shift, and go to state 57
+    TILDE          shift, and go to state 58
+
+    type  go to state 60
+    ref   go to state 11
+    exp   go to state 132
+
+
+State 101
+
+   69 exp: exp STAR . exp
+
+    TRUE_          shift, and go to state 44
+    FALSE_         shift, and go to state 45
+    TINT           shift, and go to state 1
+    TSTRING        shift, and go to state 2
+    TBOOL          shift, and go to state 3
+    NEW            shift, and go to state 50
+    INTLITERAL     shift, and go to state 52
+    STRINGLITERAL  shift, and go to state 53
+    ID             shift, and go to state 71
+    LPAREN         shift, and go to state 55
+    MINUS          shift, and go to state 56
+    NOT            shift, and go to state 57
+    TILDE          shift, and go to state 58
+
+    type  go to state 60
+    ref   go to state 11
+    exp   go to state 133
+
+
+State 102
+
+   30 global_exp: NEW type LBRACKET RBRACKET LBRACE global_exps . RBRACE
+
+    RBRACE  shift, and go to state 134
+
+
+State 103
+
+   22 global_exps: global_exp . global_exps_follow
+
+    COMMA  shift, and go to state 135
+
+    $default  reduce using rule 23 (global_exps_follow)
+
+    global_exps_follow  go to state 136
+
+
+State 104
+
+   43 if_stmt: IF LPAREN exp . RPAREN block else_stmt
+   68 exp: exp . LBRACKET exp RBRACKET
+   69    | exp . STAR exp
+   70    | exp . PLUS exp
+   71    | exp . MINUS exp
+   72    | exp . LSHIFT exp
+   73    | exp . RLSHIFT exp
+   74    | exp . RASHIFT exp
+   75    | exp . LESS exp
+   76    | exp . LESSEQ exp
+   77    | exp . GREAT exp
+   78    | exp . GREATEQ exp
+   79    | exp . EQ exp
+   80    | exp . NEQ exp
+   81    | exp . LAND exp
+   82    | exp . LOR exp
+   83    | exp . BAND exp
+   84    | exp . BOR exp
+
+    RPAREN    shift, and go to state 137
+    LBRACKET  shift, and go to state 110
+    BOR       shift, and go to state 86
+    BAND      shift, and go to state 87
+    LOR       shift, and go to state 88
+    LAND      shift, and go to state 89
+    EQ        shift, and go to state 90
+    NEQ       shift, and go to state 91
+    LESS      shift, and go to state 92
+    LESSEQ    shift, and go to state 93
+    GREAT     shift, and go to state 94
+    GREATEQ   shift, and go to state 95
+    LSHIFT    shift, and go to state 96
+    RLSHIFT   shift, and go to state 97
+    RASHIFT   shift, and go to state 98
+    PLUS      shift, and go to state 99
+    MINUS     shift, and go to state 100
+    STAR      shift, and go to state 101
+
+
+State 105
+
+   38 stmt: WHILE LPAREN exp . RPAREN block
+   68 exp: exp . LBRACKET exp RBRACKET
+   69    | exp . STAR exp
+   70    | exp . PLUS exp
+   71    | exp . MINUS exp
+   72    | exp . LSHIFT exp
+   73    | exp . RLSHIFT exp
+   74    | exp . RASHIFT exp
+   75    | exp . LESS exp
+   76    | exp . LESSEQ exp
+   77    | exp . GREAT exp
+   78    | exp . GREATEQ exp
+   79    | exp . EQ exp
+   80    | exp . NEQ exp
+   81    | exp . LAND exp
+   82    | exp . LOR exp
+   83    | exp . BAND exp
+   84    | exp . BOR exp
+
+    RPAREN    shift, and go to state 138
+    LBRACKET  shift, and go to state 110
+    BOR       shift, and go to state 86
+    BAND      shift, and go to state 87
+    LOR       shift, and go to state 88
+    LAND      shift, and go to state 89
+    EQ        shift, and go to state 90
+    NEQ       shift, and go to state 91
+    LESS      shift, and go to state 92
+    LESSEQ    shift, and go to state 93
+    GREAT     shift, and go to state 94
+    GREATEQ   shift, and go to state 95
+    LSHIFT    shift, and go to state 96
+    RLSHIFT   shift, and go to state 97
+    RASHIFT   shift, and go to state 98
+    PLUS      shift, and go to state 99
+    MINUS     shift, and go to state 100
+    STAR      shift, and go to state 101
+
+
+State 106
+
+   37 stmt: FOR LPAREN var_decls . SEMICOLON exp_opt SEMICOLON stmt_opt RPAREN block
+
+    SEMICOLON  shift, and go to state 139
+
+
+State 107
+
+   50 var_decls: var_decl . var_decls_follow
+
+    COMMA  shift, and go to state 140
+
+    $default  reduce using rule 51 (var_decls_follow)
+
+    var_decls_follow  go to state 141
+
+
+State 108
+
+   64 exp: ID LPAREN . exps RPAREN
+
+    TRUE_          shift, and go to state 44
+    FALSE_         shift, and go to state 45
+    TINT           shift, and go to state 1
+    TSTRING        shift, and go to state 2
+    TBOOL          shift, and go to state 3
+    NEW            shift, and go to state 50
+    INTLITERAL     shift, and go to state 52
+    STRINGLITERAL  shift, and go to state 53
+    ID             shift, and go to state 71
+    LPAREN         shift, and go to state 55
+    MINUS          shift, and go to state 56
+    NOT            shift, and go to state 57
+    TILDE          shift, and go to state 58
+
+    $default  reduce using rule 54 (exps)
+
+    type  go to state 60
+    ref   go to state 11
+    exps  go to state 142
+    exp   go to state 114
+
+
+State 109
+
+   33 stmt: RETURN exp SEMICOLON .
+
+    $default  reduce using rule 33 (stmt)
+
+
+State 110
+
+   68 exp: exp LBRACKET . exp RBRACKET
+
+    TRUE_          shift, and go to state 44
+    FALSE_         shift, and go to state 45
+    TINT           shift, and go to state 1
+    TSTRING        shift, and go to state 2
+    TBOOL          shift, and go to state 3
+    NEW            shift, and go to state 50
+    INTLITERAL     shift, and go to state 52
+    STRINGLITERAL  shift, and go to state 53
+    ID             shift, and go to state 71
+    LPAREN         shift, and go to state 55
+    MINUS          shift, and go to state 56
+    NOT            shift, and go to state 57
+    TILDE          shift, and go to state 58
+
+    type  go to state 60
+    ref   go to state 11
+    exp   go to state 143
+
+
+State 111
+
+   20 ref: type LBRACKET . RBRACKET
+   65 exp: NEW type LBRACKET . RBRACKET LBRACE exps RBRACE
+   66    | NEW type LBRACKET . exp RBRACKET
+
+    TRUE_          shift, and go to state 44
+    FALSE_         shift, and go to state 45
+    TINT           shift, and go to state 1
+    TSTRING        shift, and go to state 2
+    TBOOL          shift, and go to state 3
+    NEW            shift, and go to state 50
+    INTLITERAL     shift, and go to state 52
+    STRINGLITERAL  shift, and go to state 53
+    ID             shift, and go to state 71
+    LPAREN         shift, and go to state 55
+    RBRACKET       shift, and go to state 144
+    MINUS          shift, and go to state 56
+    NOT            shift, and go to state 57
+    TILDE          shift, and go to state 58
+
+    type  go to state 60
+    ref   go to state 11
+    exp   go to state 145
+
+
+State 112
+
+   53 var_decl: VAR ID ASSIGN . exp
+
+    TRUE_          shift, and go to state 44
+    FALSE_         shift, and go to state 45
+    TINT           shift, and go to state 1
+    TSTRING        shift, and go to state 2
+    TBOOL          shift, and go to state 3
+    NEW            shift, and go to state 50
+    INTLITERAL     shift, and go to state 52
+    STRINGLITERAL  shift, and go to state 53
+    ID             shift, and go to state 71
+    LPAREN         shift, and go to state 55
+    MINUS          shift, and go to state 56
+    NOT            shift, and go to state 57
+    TILDE          shift, and go to state 58
+
+    type  go to state 60
+    ref   go to state 11
+    exp   go to state 146
+
+
+State 113
+
+   35 stmt: ID LPAREN exps . RPAREN SEMICOLON
+   64 exp: ID LPAREN exps . RPAREN
+
+    RPAREN  shift, and go to state 147
+
+
+State 114
+
+   55 exps: exp . exps_follow
+   68 exp: exp . LBRACKET exp RBRACKET
+   69    | exp . STAR exp
+   70    | exp . PLUS exp
+   71    | exp . MINUS exp
+   72    | exp . LSHIFT exp
+   73    | exp . RLSHIFT exp
+   74    | exp . RASHIFT exp
+   75    | exp . LESS exp
+   76    | exp . LESSEQ exp
+   77    | exp . GREAT exp
+   78    | exp . GREATEQ exp
+   79    | exp . EQ exp
+   80    | exp . NEQ exp
+   81    | exp . LAND exp
+   82    | exp . LOR exp
+   83    | exp . BAND exp
+   84    | exp . BOR exp
+
+    COMMA     shift, and go to state 148
+    LBRACKET  shift, and go to state 110
+    BOR       shift, and go to state 86
+    BAND      shift, and go to state 87
+    LOR       shift, and go to state 88
+    LAND      shift, and go to state 89
+    EQ        shift, and go to state 90
+    NEQ       shift, and go to state 91
+    LESS      shift, and go to state 92
+    LESSEQ    shift, and go to state 93
+    GREAT     shift, and go to state 94
+    GREATEQ   shift, and go to state 95
+    LSHIFT    shift, and go to state 96
+    RLSHIFT   shift, and go to state 97
+    RASHIFT   shift, and go to state 98
+    PLUS      shift, and go to state 99
+    MINUS     shift, and go to state 100
+    STAR      shift, and go to state 101
+
+    $default  reduce using rule 56 (exps_follow)
+
+    exps_follow  go to state 149
+
+
+State 115
+
+   67 exp: LPAREN exp RPAREN .
+
+    $default  reduce using rule 67 (exp)
+
+
+State 116
+
+   31 stmt: lhs ASSIGN exp . SEMICOLON
+   68 exp: exp . LBRACKET exp RBRACKET
+   69    | exp . STAR exp
+   70    | exp . PLUS exp
+   71    | exp . MINUS exp
+   72    | exp . LSHIFT exp
+   73    | exp . RLSHIFT exp
+   74    | exp . RASHIFT exp
+   75    | exp . LESS exp
+   76    | exp . LESSEQ exp
+   77    | exp . GREAT exp
+   78    | exp . GREATEQ exp
+   79    | exp . EQ exp
+   80    | exp . NEQ exp
+   81    | exp . LAND exp
+   82    | exp . LOR exp
+   83    | exp . BAND exp
+   84    | exp . BOR exp
+
+    SEMICOLON  shift, and go to state 150
+    LBRACKET   shift, and go to state 110
+    BOR        shift, and go to state 86
+    BAND       shift, and go to state 87
+    LOR        shift, and go to state 88
+    LAND       shift, and go to state 89
+    EQ         shift, and go to state 90
+    NEQ        shift, and go to state 91
+    LESS       shift, and go to state 92
+    LESSEQ     shift, and go to state 93
+    GREAT      shift, and go to state 94
+    GREATEQ    shift, and go to state 95
+    LSHIFT     shift, and go to state 96
+    RLSHIFT    shift, and go to state 97
+    RASHIFT    shift, and go to state 98
+    PLUS       shift, and go to state 99
+    MINUS      shift, and go to state 100
+    STAR       shift, and go to state 101
+
+
+State 117
+
+   48 lhs: exp LBRACKET exp . RBRACKET
+   68 exp: exp . LBRACKET exp RBRACKET
+   68    | exp LBRACKET exp . RBRACKET
+   69    | exp . STAR exp
+   70    | exp . PLUS exp
+   71    | exp . MINUS exp
+   72    | exp . LSHIFT exp
+   73    | exp . RLSHIFT exp
+   74    | exp . RASHIFT exp
+   75    | exp . LESS exp
+   76    | exp . LESSEQ exp
+   77    | exp . GREAT exp
+   78    | exp . GREATEQ exp
+   79    | exp . EQ exp
+   80    | exp . NEQ exp
+   81    | exp . LAND exp
+   82    | exp . LOR exp
+   83    | exp . BAND exp
+   84    | exp . BOR exp
+
+    LBRACKET  shift, and go to state 110
+    RBRACKET  shift, and go to state 151
+    BOR       shift, and go to state 86
+    BAND      shift, and go to state 87
+    LOR       shift, and go to state 88
+    LAND      shift, and go to state 89
+    EQ        shift, and go to state 90
+    NEQ       shift, and go to state 91
+    LESS      shift, and go to state 92
+    LESSEQ    shift, and go to state 93
+    GREAT     shift, and go to state 94
+    GREATEQ   shift, and go to state 95
+    LSHIFT    shift, and go to state 96
+    RLSHIFT   shift, and go to state 97
+    RASHIFT   shift, and go to state 98
+    PLUS      shift, and go to state 99
+    MINUS     shift, and go to state 100
+    STAR      shift, and go to state 101
+
+
+State 118
+
+   68 exp: exp . LBRACKET exp RBRACKET
+   69    | exp . STAR exp
+   70    | exp . PLUS exp
+   71    | exp . MINUS exp
+   72    | exp . LSHIFT exp
+   73    | exp . RLSHIFT exp
+   74    | exp . RASHIFT exp
+   75    | exp . LESS exp
+   76    | exp . LESSEQ exp
+   77    | exp . GREAT exp
+   78    | exp . GREATEQ exp
+   79    | exp . EQ exp
+   80    | exp . NEQ exp
+   81    | exp . LAND exp
+   82    | exp . LOR exp
+   83    | exp . BAND exp
+   84    | exp . BOR exp
+   84    | exp BOR exp .
+
+    BAND     shift, and go to state 87
+    LOR      shift, and go to state 88
+    LAND     shift, and go to state 89
+    EQ       shift, and go to state 90
+    NEQ      shift, and go to state 91
+    LESS     shift, and go to state 92
+    LESSEQ   shift, and go to state 93
+    GREAT    shift, and go to state 94
+    GREATEQ  shift, and go to state 95
+    LSHIFT   shift, and go to state 96
+    RLSHIFT  shift, and go to state 97
+    RASHIFT  shift, and go to state 98
+    PLUS     shift, and go to state 99
+    MINUS    shift, and go to state 100
+    STAR     shift, and go to state 101
+
+    $default  reduce using rule 84 (exp)
+
+
+State 119
+
+   68 exp: exp . LBRACKET exp RBRACKET
+   69    | exp . STAR exp
+   70    | exp . PLUS exp
+   71    | exp . MINUS exp
+   72    | exp . LSHIFT exp
+   73    | exp . RLSHIFT exp
+   74    | exp . RASHIFT exp
+   75    | exp . LESS exp
+   76    | exp . LESSEQ exp
+   77    | exp . GREAT exp
+   78    | exp . GREATEQ exp
+   79    | exp . EQ exp
+   80    | exp . NEQ exp
+   81    | exp . LAND exp
+   82    | exp . LOR exp
+   83    | exp . BAND exp
+   83    | exp BAND exp .
+   84    | exp . BOR exp
+
+    LOR      shift, and go to state 88
+    LAND     shift, and go to state 89
+    EQ       shift, and go to state 90
+    NEQ      shift, and go to state 91
+    LESS     shift, and go to state 92
+    LESSEQ   shift, and go to state 93
+    GREAT    shift, and go to state 94
+    GREATEQ  shift, and go to state 95
+    LSHIFT   shift, and go to state 96
+    RLSHIFT  shift, and go to state 97
+    RASHIFT  shift, and go to state 98
+    PLUS     shift, and go to state 99
+    MINUS    shift, and go to state 100
+    STAR     shift, and go to state 101
+
+    $default  reduce using rule 83 (exp)
+
+
+State 120
+
+   68 exp: exp . LBRACKET exp RBRACKET
+   69    | exp . STAR exp
+   70    | exp . PLUS exp
+   71    | exp . MINUS exp
+   72    | exp . LSHIFT exp
+   73    | exp . RLSHIFT exp
+   74    | exp . RASHIFT exp
+   75    | exp . LESS exp
+   76    | exp . LESSEQ exp
+   77    | exp . GREAT exp
+   78    | exp . GREATEQ exp
+   79    | exp . EQ exp
+   80    | exp . NEQ exp
+   81    | exp . LAND exp
+   82    | exp . LOR exp
+   82    | exp LOR exp .
+   83    | exp . BAND exp
+   84    | exp . BOR exp
+
+    LAND     shift, and go to state 89
+    EQ       shift, and go to state 90
+    NEQ      shift, and go to state 91
+    LESS     shift, and go to state 92
+    LESSEQ   shift, and go to state 93
+    GREAT    shift, and go to state 94
+    GREATEQ  shift, and go to state 95
+    LSHIFT   shift, and go to state 96
+    RLSHIFT  shift, and go to state 97
+    RASHIFT  shift, and go to state 98
+    PLUS     shift, and go to state 99
+    MINUS    shift, and go to state 100
+    STAR     shift, and go to state 101
+
+    $default  reduce using rule 82 (exp)
+
+
+State 121
+
+   68 exp: exp . LBRACKET exp RBRACKET
+   69    | exp . STAR exp
+   70    | exp . PLUS exp
+   71    | exp . MINUS exp
+   72    | exp . LSHIFT exp
+   73    | exp . RLSHIFT exp
+   74    | exp . RASHIFT exp
+   75    | exp . LESS exp
+   76    | exp . LESSEQ exp
+   77    | exp . GREAT exp
+   78    | exp . GREATEQ exp
+   79    | exp . EQ exp
+   80    | exp . NEQ exp
+   81    | exp . LAND exp
+   81    | exp LAND exp .
+   82    | exp . LOR exp
+   83    | exp . BAND exp
+   84    | exp . BOR exp
+
+    EQ       shift, and go to state 90
+    NEQ      shift, and go to state 91
+    LESS     shift, and go to state 92
+    LESSEQ   shift, and go to state 93
+    GREAT    shift, and go to state 94
+    GREATEQ  shift, and go to state 95
+    LSHIFT   shift, and go to state 96
+    RLSHIFT  shift, and go to state 97
+    RASHIFT  shift, and go to state 98
+    PLUS     shift, and go to state 99
+    MINUS    shift, and go to state 100
+    STAR     shift, and go to state 101
+
+    $default  reduce using rule 81 (exp)
+
+
+State 122
+
+   68 exp: exp . LBRACKET exp RBRACKET
+   69    | exp . STAR exp
+   70    | exp . PLUS exp
+   71    | exp . MINUS exp
+   72    | exp . LSHIFT exp
+   73    | exp . RLSHIFT exp
+   74    | exp . RASHIFT exp
+   75    | exp . LESS exp
+   76    | exp . LESSEQ exp
+   77    | exp . GREAT exp
+   78    | exp . GREATEQ exp
+   79    | exp . EQ exp
+   79    | exp EQ exp .
+   80    | exp . NEQ exp
+   81    | exp . LAND exp
+   82    | exp . LOR exp
+   83    | exp . BAND exp
+   84    | exp . BOR exp
+
+    LESS     shift, and go to state 92
+    LESSEQ   shift, and go to state 93
+    GREAT    shift, and go to state 94
+    GREATEQ  shift, and go to state 95
+    LSHIFT   shift, and go to state 96
+    RLSHIFT  shift, and go to state 97
+    RASHIFT  shift, and go to state 98
+    PLUS     shift, and go to state 99
+    MINUS    shift, and go to state 100
+    STAR     shift, and go to state 101
+
+    $default  reduce using rule 79 (exp)
+
+
+State 123
+
+   68 exp: exp . LBRACKET exp RBRACKET
+   69    | exp . STAR exp
+   70    | exp . PLUS exp
+   71    | exp . MINUS exp
+   72    | exp . LSHIFT exp
+   73    | exp . RLSHIFT exp
+   74    | exp . RASHIFT exp
+   75    | exp . LESS exp
+   76    | exp . LESSEQ exp
+   77    | exp . GREAT exp
+   78    | exp . GREATEQ exp
+   79    | exp . EQ exp
+   80    | exp . NEQ exp
+   80    | exp NEQ exp .
+   81    | exp . LAND exp
+   82    | exp . LOR exp
+   83    | exp . BAND exp
+   84    | exp . BOR exp
+
+    LESS     shift, and go to state 92
+    LESSEQ   shift, and go to state 93
+    GREAT    shift, and go to state 94
+    GREATEQ  shift, and go to state 95
+    LSHIFT   shift, and go to state 96
+    RLSHIFT  shift, and go to state 97
+    RASHIFT  shift, and go to state 98
+    PLUS     shift, and go to state 99
+    MINUS    shift, and go to state 100
+    STAR     shift, and go to state 101
+
+    $default  reduce using rule 80 (exp)
+
+
+State 124
+
+   68 exp: exp . LBRACKET exp RBRACKET
+   69    | exp . STAR exp
+   70    | exp . PLUS exp
+   71    | exp . MINUS exp
+   72    | exp . LSHIFT exp
+   73    | exp . RLSHIFT exp
+   74    | exp . RASHIFT exp
+   75    | exp . LESS exp
+   75    | exp LESS exp .
+   76    | exp . LESSEQ exp
+   77    | exp . GREAT exp
+   78    | exp . GREATEQ exp
+   79    | exp . EQ exp
+   80    | exp . NEQ exp
+   81    | exp . LAND exp
+   82    | exp . LOR exp
+   83    | exp . BAND exp
+   84    | exp . BOR exp
+
+    LSHIFT   shift, and go to state 96
+    RLSHIFT  shift, and go to state 97
+    RASHIFT  shift, and go to state 98
+    PLUS     shift, and go to state 99
+    MINUS    shift, and go to state 100
+    STAR     shift, and go to state 101
+
+    $default  reduce using rule 75 (exp)
+
+
+State 125
+
+   68 exp: exp . LBRACKET exp RBRACKET
+   69    | exp . STAR exp
+   70    | exp . PLUS exp
+   71    | exp . MINUS exp
+   72    | exp . LSHIFT exp
+   73    | exp . RLSHIFT exp
+   74    | exp . RASHIFT exp
+   75    | exp . LESS exp
+   76    | exp . LESSEQ exp
+   76    | exp LESSEQ exp .
+   77    | exp . GREAT exp
+   78    | exp . GREATEQ exp
+   79    | exp . EQ exp
+   80    | exp . NEQ exp
+   81    | exp . LAND exp
+   82    | exp . LOR exp
+   83    | exp . BAND exp
+   84    | exp . BOR exp
+
+    LSHIFT   shift, and go to state 96
+    RLSHIFT  shift, and go to state 97
+    RASHIFT  shift, and go to state 98
+    PLUS     shift, and go to state 99
+    MINUS    shift, and go to state 100
+    STAR     shift, and go to state 101
+
+    $default  reduce using rule 76 (exp)
+
+
+State 126
+
+   68 exp: exp . LBRACKET exp RBRACKET
+   69    | exp . STAR exp
+   70    | exp . PLUS exp
+   71    | exp . MINUS exp
+   72    | exp . LSHIFT exp
+   73    | exp . RLSHIFT exp
+   74    | exp . RASHIFT exp
+   75    | exp . LESS exp
+   76    | exp . LESSEQ exp
+   77    | exp . GREAT exp
+   77    | exp GREAT exp .
+   78    | exp . GREATEQ exp
+   79    | exp . EQ exp
+   80    | exp . NEQ exp
+   81    | exp . LAND exp
+   82    | exp . LOR exp
+   83    | exp . BAND exp
+   84    | exp . BOR exp
+
+    LSHIFT   shift, and go to state 96
+    RLSHIFT  shift, and go to state 97
+    RASHIFT  shift, and go to state 98
+    PLUS     shift, and go to state 99
+    MINUS    shift, and go to state 100
+    STAR     shift, and go to state 101
+
+    $default  reduce using rule 77 (exp)
+
+
+State 127
+
+   68 exp: exp . LBRACKET exp RBRACKET
+   69    | exp . STAR exp
+   70    | exp . PLUS exp
+   71    | exp . MINUS exp
+   72    | exp . LSHIFT exp
+   73    | exp . RLSHIFT exp
+   74    | exp . RASHIFT exp
+   75    | exp . LESS exp
+   76    | exp . LESSEQ exp
+   77    | exp . GREAT exp
+   78    | exp . GREATEQ exp
+   78    | exp GREATEQ exp .
+   79    | exp . EQ exp
+   80    | exp . NEQ exp
+   81    | exp . LAND exp
+   82    | exp . LOR exp
+   83    | exp . BAND exp
+   84    | exp . BOR exp
+
+    LSHIFT   shift, and go to state 96
+    RLSHIFT  shift, and go to state 97
+    RASHIFT  shift, and go to state 98
+    PLUS     shift, and go to state 99
+    MINUS    shift, and go to state 100
+    STAR     shift, and go to state 101
+
+    $default  reduce using rule 78 (exp)
+
+
+State 128
+
+   68 exp: exp . LBRACKET exp RBRACKET
+   69    | exp . STAR exp
+   70    | exp . PLUS exp
+   71    | exp . MINUS exp
+   72    | exp . LSHIFT exp
+   72    | exp LSHIFT exp .
+   73    | exp . RLSHIFT exp
+   74    | exp . RASHIFT exp
+   75    | exp . LESS exp
+   76    | exp . LESSEQ exp
+   77    | exp . GREAT exp
+   78    | exp . GREATEQ exp
+   79    | exp . EQ exp
+   80    | exp . NEQ exp
+   81    | exp . LAND exp
+   82    | exp . LOR exp
+   83    | exp . BAND exp
+   84    | exp . BOR exp
+
+    PLUS   shift, and go to state 99
+    MINUS  shift, and go to state 100
+    STAR   shift, and go to state 101
+
+    $default  reduce using rule 72 (exp)
+
+
+State 129
+
+   68 exp: exp . LBRACKET exp RBRACKET
+   69    | exp . STAR exp
+   70    | exp . PLUS exp
+   71    | exp . MINUS exp
+   72    | exp . LSHIFT exp
+   73    | exp . RLSHIFT exp
+   73    | exp RLSHIFT exp .
+   74    | exp . RASHIFT exp
+   75    | exp . LESS exp
+   76    | exp . LESSEQ exp
+   77    | exp . GREAT exp
+   78    | exp . GREATEQ exp
+   79    | exp . EQ exp
+   80    | exp . NEQ exp
+   81    | exp . LAND exp
+   82    | exp . LOR exp
+   83    | exp . BAND exp
+   84    | exp . BOR exp
+
+    PLUS   shift, and go to state 99
+    MINUS  shift, and go to state 100
+    STAR   shift, and go to state 101
+
+    $default  reduce using rule 73 (exp)
+
+
+State 130
+
+   68 exp: exp . LBRACKET exp RBRACKET
+   69    | exp . STAR exp
+   70    | exp . PLUS exp
+   71    | exp . MINUS exp
+   72    | exp . LSHIFT exp
+   73    | exp . RLSHIFT exp
+   74    | exp . RASHIFT exp
+   74    | exp RASHIFT exp .
+   75    | exp . LESS exp
+   76    | exp . LESSEQ exp
+   77    | exp . GREAT exp
+   78    | exp . GREATEQ exp
+   79    | exp . EQ exp
+   80    | exp . NEQ exp
+   81    | exp . LAND exp
+   82    | exp . LOR exp
+   83    | exp . BAND exp
+   84    | exp . BOR exp
+
+    PLUS   shift, and go to state 99
+    MINUS  shift, and go to state 100
+    STAR   shift, and go to state 101
+
+    $default  reduce using rule 74 (exp)
+
+
+State 131
+
+   68 exp: exp . LBRACKET exp RBRACKET
+   69    | exp . STAR exp
+   70    | exp . PLUS exp
+   70    | exp PLUS exp .
+   71    | exp . MINUS exp
+   72    | exp . LSHIFT exp
+   73    | exp . RLSHIFT exp
+   74    | exp . RASHIFT exp
+   75    | exp . LESS exp
+   76    | exp . LESSEQ exp
+   77    | exp . GREAT exp
+   78    | exp . GREATEQ exp
+   79    | exp . EQ exp
+   80    | exp . NEQ exp
+   81    | exp . LAND exp
+   82    | exp . LOR exp
+   83    | exp . BAND exp
+   84    | exp . BOR exp
+
+    STAR  shift, and go to state 101
+
+    $default  reduce using rule 70 (exp)
+
+
+State 132
+
+   68 exp: exp . LBRACKET exp RBRACKET
+   69    | exp . STAR exp
+   70    | exp . PLUS exp
+   71    | exp . MINUS exp
+   71    | exp MINUS exp .
+   72    | exp . LSHIFT exp
+   73    | exp . RLSHIFT exp
+   74    | exp . RASHIFT exp
+   75    | exp . LESS exp
+   76    | exp . LESSEQ exp
+   77    | exp . GREAT exp
+   78    | exp . GREATEQ exp
+   79    | exp . EQ exp
+   80    | exp . NEQ exp
+   81    | exp . LAND exp
+   82    | exp . LOR exp
+   83    | exp . BAND exp
+   84    | exp . BOR exp
+
+    STAR  shift, and go to state 101
+
+    $default  reduce using rule 71 (exp)
+
+
+State 133
+
+   68 exp: exp . LBRACKET exp RBRACKET
+   69    | exp . STAR exp
+   69    | exp STAR exp .
+   70    | exp . PLUS exp
+   71    | exp . MINUS exp
+   72    | exp . LSHIFT exp
+   73    | exp . RLSHIFT exp
+   74    | exp . RASHIFT exp
+   75    | exp . LESS exp
+   76    | exp . LESSEQ exp
+   77    | exp . GREAT exp
+   78    | exp . GREATEQ exp
+   79    | exp . EQ exp
+   80    | exp . NEQ exp
+   81    | exp . LAND exp
+   82    | exp . LOR exp
+   83    | exp . BAND exp
+   84    | exp . BOR exp
+
+    $default  reduce using rule 69 (exp)
+
+
+State 134
+
+   30 global_exp: NEW type LBRACKET RBRACKET LBRACE global_exps RBRACE .
+
+    $default  reduce using rule 30 (global_exp)
+
+
+State 135
+
+   24 global_exps_follow: COMMA . global_exp global_exps_follow
+
+    TRUE_          shift, and go to state 21
+    FALSE_         shift, and go to state 22
+    TINT           shift, and go to state 1
+    TSTRING        shift, and go to state 2
+    TBOOL          shift, and go to state 3
+    NEW            shift, and go to state 23
+    INTLITERAL     shift, and go to state 24
+    STRINGLITERAL  shift, and go to state 25
+
+    type        go to state 26
+    ref         go to state 11
+    global_exp  go to state 152
+
+
+State 136
+
+   22 global_exps: global_exp global_exps_follow .
+
+    $default  reduce using rule 22 (global_exps)
+
+
+State 137
+
+   43 if_stmt: IF LPAREN exp RPAREN . block else_stmt
+
+    LBRACE  shift, and go to state 40
+
+    block  go to state 153
+
+
+State 138
+
+   38 stmt: WHILE LPAREN exp RPAREN . block
+
+    LBRACE  shift, and go to state 40
+
+    block  go to state 154
+
+
+State 139
+
+   37 stmt: FOR LPAREN var_decls SEMICOLON . exp_opt SEMICOLON stmt_opt RPAREN block
+
+    TRUE_          shift, and go to state 44
+    FALSE_         shift, and go to state 45
+    TINT           shift, and go to state 1
+    TSTRING        shift, and go to state 2
+    TBOOL          shift, and go to state 3
+    NEW            shift, and go to state 50
+    INTLITERAL     shift, and go to state 52
+    STRINGLITERAL  shift, and go to state 53
+    ID             shift, and go to state 71
+    LPAREN         shift, and go to state 55
+    MINUS          shift, and go to state 56
+    NOT            shift, and go to state 57
+    TILDE          shift, and go to state 58
+
+    $default  reduce using rule 41 (exp_opt)
+
+    type     go to state 60
+    ref      go to state 11
+    exp_opt  go to state 155
+    exp      go to state 156
+
+
+State 140
+
+   52 var_decls_follow: COMMA . var_decl var_decls_follow
+
+    VAR  shift, and go to state 51
+
+    var_decl  go to state 157
+
+
+State 141
+
+   50 var_decls: var_decl var_decls_follow .
+
+    $default  reduce using rule 50 (var_decls)
+
+
+State 142
+
+   64 exp: ID LPAREN exps . RPAREN
+
+    RPAREN  shift, and go to state 158
+
+
+State 143
+
+   68 exp: exp . LBRACKET exp RBRACKET
+   68    | exp LBRACKET exp . RBRACKET
+   69    | exp . STAR exp
+   70    | exp . PLUS exp
+   71    | exp . MINUS exp
+   72    | exp . LSHIFT exp
+   73    | exp . RLSHIFT exp
+   74    | exp . RASHIFT exp
+   75    | exp . LESS exp
+   76    | exp . LESSEQ exp
+   77    | exp . GREAT exp
+   78    | exp . GREATEQ exp
+   79    | exp . EQ exp
+   80    | exp . NEQ exp
+   81    | exp . LAND exp
+   82    | exp . LOR exp
+   83    | exp . BAND exp
+   84    | exp . BOR exp
+
+    LBRACKET  shift, and go to state 110
+    RBRACKET  shift, and go to state 159
+    BOR       shift, and go to state 86
+    BAND      shift, and go to state 87
+    LOR       shift, and go to state 88
+    LAND      shift, and go to state 89
+    EQ        shift, and go to state 90
+    NEQ       shift, and go to state 91
+    LESS      shift, and go to state 92
+    LESSEQ    shift, and go to state 93
+    GREAT     shift, and go to state 94
+    GREATEQ   shift, and go to state 95
+    LSHIFT    shift, and go to state 96
+    RLSHIFT   shift, and go to state 97
+    RASHIFT   shift, and go to state 98
+    PLUS      shift, and go to state 99
+    MINUS     shift, and go to state 100
+    STAR      shift, and go to state 101
+
+
+State 144
+
+   20 ref: type LBRACKET RBRACKET .
+   65 exp: NEW type LBRACKET RBRACKET . LBRACE exps RBRACE
+
+    LBRACE  shift, and go to state 160
+
+    $default  reduce using rule 20 (ref)
+
+
+State 145
+
+   66 exp: NEW type LBRACKET exp . RBRACKET
+   68    | exp . LBRACKET exp RBRACKET
+   69    | exp . STAR exp
+   70    | exp . PLUS exp
+   71    | exp . MINUS exp
+   72    | exp . LSHIFT exp
+   73    | exp . RLSHIFT exp
+   74    | exp . RASHIFT exp
+   75    | exp . LESS exp
+   76    | exp . LESSEQ exp
+   77    | exp . GREAT exp
+   78    | exp . GREATEQ exp
+   79    | exp . EQ exp
+   80    | exp . NEQ exp
+   81    | exp . LAND exp
+   82    | exp . LOR exp
+   83    | exp . BAND exp
+   84    | exp . BOR exp
+
+    LBRACKET  shift, and go to state 110
+    RBRACKET  shift, and go to state 161
+    BOR       shift, and go to state 86
+    BAND      shift, and go to state 87
+    LOR       shift, and go to state 88
+    LAND      shift, and go to state 89
+    EQ        shift, and go to state 90
+    NEQ       shift, and go to state 91
+    LESS      shift, and go to state 92
+    LESSEQ    shift, and go to state 93
+    GREAT     shift, and go to state 94
+    GREATEQ   shift, and go to state 95
+    LSHIFT    shift, and go to state 96
+    RLSHIFT   shift, and go to state 97
+    RASHIFT   shift, and go to state 98
+    PLUS      shift, and go to state 99
+    MINUS     shift, and go to state 100
+    STAR      shift, and go to state 101
+
+
+State 146
+
+   53 var_decl: VAR ID ASSIGN exp .
+   68 exp: exp . LBRACKET exp RBRACKET
+   69    | exp . STAR exp
+   70    | exp . PLUS exp
+   71    | exp . MINUS exp
+   72    | exp . LSHIFT exp
+   73    | exp . RLSHIFT exp
+   74    | exp . RASHIFT exp
+   75    | exp . LESS exp
+   76    | exp . LESSEQ exp
+   77    | exp . GREAT exp
+   78    | exp . GREATEQ exp
+   79    | exp . EQ exp
+   80    | exp . NEQ exp
+   81    | exp . LAND exp
+   82    | exp . LOR exp
+   83    | exp . BAND exp
+   84    | exp . BOR exp
+
+    LBRACKET  shift, and go to state 110
+    BOR       shift, and go to state 86
+    BAND      shift, and go to state 87
+    LOR       shift, and go to state 88
+    LAND      shift, and go to state 89
+    EQ        shift, and go to state 90
+    NEQ       shift, and go to state 91
+    LESS      shift, and go to state 92
+    LESSEQ    shift, and go to state 93
+    GREAT     shift, and go to state 94
+    GREATEQ   shift, and go to state 95
+    LSHIFT    shift, and go to state 96
+    RLSHIFT   shift, and go to state 97
+    RASHIFT   shift, and go to state 98
+    PLUS      shift, and go to state 99
+    MINUS     shift, and go to state 100
+    STAR      shift, and go to state 101
+
+    $default  reduce using rule 53 (var_decl)
+
+
+State 147
+
+   35 stmt: ID LPAREN exps RPAREN . SEMICOLON
+   64 exp: ID LPAREN exps RPAREN .
+
+    SEMICOLON  shift, and go to state 162
+
+    $default  reduce using rule 64 (exp)
+
+
+State 148
+
+   57 exps_follow: COMMA . exp exps_follow
+
+    TRUE_          shift, and go to state 44
+    FALSE_         shift, and go to state 45
+    TINT           shift, and go to state 1
+    TSTRING        shift, and go to state 2
+    TBOOL          shift, and go to state 3
+    NEW            shift, and go to state 50
+    INTLITERAL     shift, and go to state 52
+    STRINGLITERAL  shift, and go to state 53
+    ID             shift, and go to state 71
+    LPAREN         shift, and go to state 55
+    MINUS          shift, and go to state 56
+    NOT            shift, and go to state 57
+    TILDE          shift, and go to state 58
+
+    type  go to state 60
+    ref   go to state 11
+    exp   go to state 163
+
+
+State 149
+
+   55 exps: exp exps_follow .
+
+    $default  reduce using rule 55 (exps)
+
+
+State 150
+
+   31 stmt: lhs ASSIGN exp SEMICOLON .
+
+    $default  reduce using rule 31 (stmt)
+
+
+State 151
+
+   48 lhs: exp LBRACKET exp RBRACKET .
+   68 exp: exp LBRACKET exp RBRACKET .
+
+    ASSIGN    reduce using rule 48 (lhs)
+    $default  reduce using rule 68 (exp)
+
+
+State 152
+
+   24 global_exps_follow: COMMA global_exp . global_exps_follow
+
+    COMMA  shift, and go to state 135
+
+    $default  reduce using rule 23 (global_exps_follow)
+
+    global_exps_follow  go to state 164
+
+
+State 153
+
+   43 if_stmt: IF LPAREN exp RPAREN block . else_stmt
+
+    ELSE  shift, and go to state 165
+
+    $default  reduce using rule 44 (else_stmt)
+
+    else_stmt  go to state 166
+
+
+State 154
+
+   38 stmt: WHILE LPAREN exp RPAREN block .
+
+    $default  reduce using rule 38 (stmt)
+
+
+State 155
+
+   37 stmt: FOR LPAREN var_decls SEMICOLON exp_opt . SEMICOLON stmt_opt RPAREN block
+
+    SEMICOLON  shift, and go to state 167
+
+
+State 156
+
+   42 exp_opt: exp .
+   68 exp: exp . LBRACKET exp RBRACKET
+   69    | exp . STAR exp
+   70    | exp . PLUS exp
+   71    | exp . MINUS exp
+   72    | exp . LSHIFT exp
+   73    | exp . RLSHIFT exp
+   74    | exp . RASHIFT exp
+   75    | exp . LESS exp
+   76    | exp . LESSEQ exp
+   77    | exp . GREAT exp
+   78    | exp . GREATEQ exp
+   79    | exp . EQ exp
+   80    | exp . NEQ exp
+   81    | exp . LAND exp
+   82    | exp . LOR exp
+   83    | exp . BAND exp
+   84    | exp . BOR exp
+
+    LBRACKET  shift, and go to state 110
+    BOR       shift, and go to state 86
+    BAND      shift, and go to state 87
+    LOR       shift, and go to state 88
+    LAND      shift, and go to state 89
+    EQ        shift, and go to state 90
+    NEQ       shift, and go to state 91
+    LESS      shift, and go to state 92
+    LESSEQ    shift, and go to state 93
+    GREAT     shift, and go to state 94
+    GREATEQ   shift, and go to state 95
+    LSHIFT    shift, and go to state 96
+    RLSHIFT   shift, and go to state 97
+    RASHIFT   shift, and go to state 98
+    PLUS      shift, and go to state 99
+    MINUS     shift, and go to state 100
+    STAR      shift, and go to state 101
+
+    $default  reduce using rule 42 (exp_opt)
+
+
+State 157
+
+   52 var_decls_follow: COMMA var_decl . var_decls_follow
+
+    COMMA  shift, and go to state 140
+
+    $default  reduce using rule 51 (var_decls_follow)
+
+    var_decls_follow  go to state 168
+
+
+State 158
+
+   64 exp: ID LPAREN exps RPAREN .
+
+    $default  reduce using rule 64 (exp)
+
+
+State 159
+
+   68 exp: exp LBRACKET exp RBRACKET .
+
+    $default  reduce using rule 68 (exp)
+
+
+State 160
+
+   65 exp: NEW type LBRACKET RBRACKET LBRACE . exps RBRACE
+
+    TRUE_          shift, and go to state 44
+    FALSE_         shift, and go to state 45
+    TINT           shift, and go to state 1
+    TSTRING        shift, and go to state 2
+    TBOOL          shift, and go to state 3
+    NEW            shift, and go to state 50
+    INTLITERAL     shift, and go to state 52
+    STRINGLITERAL  shift, and go to state 53
+    ID             shift, and go to state 71
+    LPAREN         shift, and go to state 55
+    MINUS          shift, and go to state 56
+    NOT            shift, and go to state 57
+    TILDE          shift, and go to state 58
+
+    $default  reduce using rule 54 (exps)
+
+    type  go to state 60
+    ref   go to state 11
+    exps  go to state 169
+    exp   go to state 114
+
+
+State 161
+
+   66 exp: NEW type LBRACKET exp RBRACKET .
+
+    $default  reduce using rule 66 (exp)
+
+
+State 162
+
+   35 stmt: ID LPAREN exps RPAREN SEMICOLON .
+
+    $default  reduce using rule 35 (stmt)
+
+
+State 163
+
+   57 exps_follow: COMMA exp . exps_follow
+   68 exp: exp . LBRACKET exp RBRACKET
+   69    | exp . STAR exp
+   70    | exp . PLUS exp
+   71    | exp . MINUS exp
+   72    | exp . LSHIFT exp
+   73    | exp . RLSHIFT exp
+   74    | exp . RASHIFT exp
+   75    | exp . LESS exp
+   76    | exp . LESSEQ exp
+   77    | exp . GREAT exp
+   78    | exp . GREATEQ exp
+   79    | exp . EQ exp
+   80    | exp . NEQ exp
+   81    | exp . LAND exp
+   82    | exp . LOR exp
+   83    | exp . BAND exp
+   84    | exp . BOR exp
+
+    COMMA     shift, and go to state 148
+    LBRACKET  shift, and go to state 110
+    BOR       shift, and go to state 86
+    BAND      shift, and go to state 87
+    LOR       shift, and go to state 88
+    LAND      shift, and go to state 89
+    EQ        shift, and go to state 90
+    NEQ       shift, and go to state 91
+    LESS      shift, and go to state 92
+    LESSEQ    shift, and go to state 93
+    GREAT     shift, and go to state 94
+    GREATEQ   shift, and go to state 95
+    LSHIFT    shift, and go to state 96
+    RLSHIFT   shift, and go to state 97
+    RASHIFT   shift, and go to state 98
+    PLUS      shift, and go to state 99
+    MINUS     shift, and go to state 100
+    STAR      shift, and go to state 101
+
+    $default  reduce using rule 56 (exps_follow)
+
+    exps_follow  go to state 170
+
+
+State 164
+
+   24 global_exps_follow: COMMA global_exp global_exps_follow .
+
+    $default  reduce using rule 24 (global_exps_follow)
+
+
+State 165
+
+   45 else_stmt: ELSE . block
+   46          | ELSE . if_stmt
+
+    IF      shift, and go to state 46
+    LBRACE  shift, and go to state 40
+
+    block    go to state 171
+    if_stmt  go to state 172
+
+
+State 166
+
+   43 if_stmt: IF LPAREN exp RPAREN block else_stmt .
+
+    $default  reduce using rule 43 (if_stmt)
+
+
+State 167
+
+   37 stmt: FOR LPAREN var_decls SEMICOLON exp_opt SEMICOLON . stmt_opt RPAREN block
+
+    TRUE_          shift, and go to state 44
+    FALSE_         shift, and go to state 45
+    TINT           shift, and go to state 1
+    TSTRING        shift, and go to state 2
+    TBOOL          shift, and go to state 3
+    IF             shift, and go to state 46
+    WHILE          shift, and go to state 47
+    FOR            shift, and go to state 48
+    RETURN         shift, and go to state 49
+    NEW            shift, and go to state 50
+    VAR            shift, and go to state 51
+    INTLITERAL     shift, and go to state 52
+    STRINGLITERAL  shift, and go to state 53
+    ID             shift, and go to state 54
+    LPAREN         shift, and go to state 55
+    MINUS          shift, and go to state 56
+    NOT            shift, and go to state 57
+    TILDE          shift, and go to state 58
+
+    $default  reduce using rule 39 (stmt_opt)
+
+    type      go to state 60
+    ref       go to state 11
+    stmt      go to state 173
+    stmt_opt  go to state 174
+    if_stmt   go to state 62
+    lhs       go to state 63
+    var_decl  go to state 64
+    exp       go to state 65
+
+
+State 168
+
+   52 var_decls_follow: COMMA var_decl var_decls_follow .
+
+    $default  reduce using rule 52 (var_decls_follow)
+
+
+State 169
+
+   65 exp: NEW type LBRACKET RBRACKET LBRACE exps . RBRACE
+
+    RBRACE  shift, and go to state 175
+
+
+State 170
+
+   57 exps_follow: COMMA exp exps_follow .
+
+    $default  reduce using rule 57 (exps_follow)
+
+
+State 171
+
+   45 else_stmt: ELSE block .
+
+    $default  reduce using rule 45 (else_stmt)
+
+
+State 172
+
+   46 else_stmt: ELSE if_stmt .
+
+    $default  reduce using rule 46 (else_stmt)
+
+
+State 173
+
+   40 stmt_opt: stmt .
+
+    $default  reduce using rule 40 (stmt_opt)
+
+
+State 174
+
+   37 stmt: FOR LPAREN var_decls SEMICOLON exp_opt SEMICOLON stmt_opt . RPAREN block
+
+    RPAREN  shift, and go to state 176
+
+
+State 175
+
+   65 exp: NEW type LBRACKET RBRACKET LBRACE exps RBRACE .
+
+    $default  reduce using rule 65 (exp)
+
+
+State 176
+
+   37 stmt: FOR LPAREN var_decls SEMICOLON exp_opt SEMICOLON stmt_opt RPAREN . block
+
+    LBRACE  shift, and go to state 40
+
+    block  go to state 177
+
+
+State 177
+
+   37 stmt: FOR LPAREN var_decls SEMICOLON exp_opt SEMICOLON stmt_opt RPAREN block .
+
+    $default  reduce using rule 37 (stmt)
