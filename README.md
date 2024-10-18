@@ -3,7 +3,7 @@ Oat compiler project (LLVM)
 
 
 # Part 1 Micro Language Compiler
-More detailed verstion see [instruction](/Compiler/Part%201-instruction.pdf) and [report](/Compiler/Part1/src/report.md)
+More detailed verstion see [instruction](/Compiler/Part%201-instruction.pdf) and [report](Part1/src/report.md)
 
 #### 1. Background Information:
 This project focuses on designing and implementing a **compiler frontend** for a simplified **Micro Language**. The goal is to transform Micro Language code into **LLVM Intermediate Representation (IR)** and then compile it into **RISC-V assembly**. The compiled code is executed on a RISC-V emulator to validate the correctness.
